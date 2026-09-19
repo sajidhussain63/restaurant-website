@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura | Luxury Dining Experience</title>
+  <meta name="description" content="Experience Michelin-star dining with our exclusive menu and elegant atmosphere.">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-family='serif' font-size='80' fill='%23FFC300'>A</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Home Page Specific Styles */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: url('assets/images/hero_bg.png') no-repeat center center/cover;
+      background-attachment: fixed;
+      /* Parallax effect */
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(10, 10, 10, 0.7), var(--bg-darker));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 0 var(--spacing-lg);
+    }
+
+    .hero-title {
+      font-size: 5rem;
+      color: #fff;
+      margin-bottom: var(--spacing-sm);
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+      animation: fadeUp 1s ease-out forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+      margin-bottom: var(--spacing-lg);
+      letter-spacing: 2px;
+      animation: fadeUp 1s ease-out 0.3s forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      animation: fadeUp 1s ease-out 0.6s forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Featured Dishes */
+    .dish-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .dish-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      cursor: pointer;
+      group: dish;
+    }
+
+    .dish-img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .dish-card:hover .dish-img {
+      transform: scale(1.08);
+    }
+
+    .dish-info {
+      position: absolute;
+      bottom: -100px;
+      /* Hidden initially */
+      left: 0;
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+      transition: bottom var(--transition-fast);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .dish-card:hover .dish-info {
+      bottom: 0;
+    }
+
+    .dish-name {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .dish-price {
+      color: var(--secondary-color);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* Testimonials Slider */
+    .testimonial-section {
+      background: url('assets/images/hero_bg.png') center/cover fixed;
+      position: relative;
+    }
+
+    .testimonial-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 5, 5, 0.85);
+    }
+
+    .testimonial-container {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonial-slide {
+      display: none;
+      padding: 40px;
+    }
+
+    .testimonial-slide.active {
+      display: block;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .testimonial-text {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #fff;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    .testimonial-author {
+      color: var(--secondary-color);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .testimonial-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--glass-border);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .dot.active {
+      background: var(--secondary-color);
+      box-shadow: 0 0 10px var(--secondary-color);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 3.5rem;
+      }
+
+      .hero-btns {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-container">
+      <div class="logo">AURA</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="order.html">Order</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title text-3d">Culinary Art</h1>
+      <p class="hero-subtitle">Experience the symphony of flavors in a luxurious setting</p>
+      <div class="hero-btns">
+        <a href="order.html" class="btn btn-primary">Order Now</a>
+        <a href="menu.html" class="btn btn-secondary">Explore Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Snippet -->
+  <section class="section">
+    <div class="container text-center reveal">
+      <h4 class="section-subtitle">Our Story</h4>
+      <h2 class="section-title">A Legacy of Taste</h2>
+      <p style="max-width: 700px; margin: 0 auto; font-size: 1.1rem; line-height: 1.8;">
+        At Aura, we believe that dining is not just about eating, but an experience that engages all the senses.
+        Our Michelin-starred chefs craft each dish with precision, passion, and the finest ingredients sourced globally.
+        Step into our world of elegance and let us take you on an unforgettable gastronomic journey.
+      </p>
+      <br>
+      <a href="about.html" class="btn btn-secondary" style="margin-top: 20px;">Discover More</a>
+    </div>
+  </section>
+
+  <!-- Featured Dishes -->
+  <section class="section section-bg-dark">
+    <div class="container">
+      <div class="text-center reveal">
+        <h4 class="section-subtitle">Signatures</h4>
+        <h2 class="section-title">Featured Dishes</h2>
+      </div>
+
+      <div class="dish-grid reveal fade-up">
+        <!-- Dish 1 -->
+        <div class="dish-card glass-panel" onclick="window.location.href='menu.html'">
+          <img src="assets/images/steak_dish.png" alt="Wagyu Beef" class="dish-img">
+          <div class="dish-info">
+            <div>
+              <h3 class="dish-name">A5 Wagyu Ribeye</h3>
+              <p style="margin:0; font-size: 0.9rem;">Truffle mash, gold leaf, red wine jus</p>
+            </div>
+            <span class="dish-price">$185</span>
+          </div>
+        </div>
+
+        <!-- Dish 2 -->
+        <div class="dish-card glass-panel" onclick="window.location.href='menu.html'">
+          <img src="assets/images/steak_dish.png" alt="Scallops" class="dish-img">
+          <div class="dish-info">
+            <div>
+              <h3 class="dish-name">Pan-Seared Scallops</h3>
+              <p style="margin:0; font-size: 0.9rem;">Cauliflower purée, caviar, herb oil</p>
+            </div>
+            <span class="dish-price">$85</span>
+          </div>
+        </div>
+
+        <!-- Dish 3 -->
+        <div class="dish-card glass-panel" onclick="window.location.href='menu.html'">
+          <img src="assets/images/hero_bg.png" alt="Dessert" class="dish-img">
+          <div class="dish-info">
+            <div>
+              <h3 class="dish-name">Dark Chocolate Dome</h3>
+              <p style="margin:0; font-size: 0.9rem;">Raspberry coulis, hazelnut crunch</p>
+            </div>
+            <span class="dish-price">$45</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section testimonial-section">
+    <div class="testimonial-overlay"></div>
+    <div class="container testimonial-container reveal">
+      <i class="fas fa-quote-left"
+        style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 20px; opacity: 0.5;"></i>
+
+      <div class="testimonial-slider">
+        <div class="testimonial-slide active">
+          <p class="testimonial-text">"An absolute masterpiece. Every bite was a revelation. The ambiance is unmatched
+            and the service is impeccable."</p>
+          <p class="testimonial-author">- James Sterling, Food Critic</p>
+        </div>
+        <div class="testimonial-slide">
+          <p class="testimonial-text">"Aura redefines luxury dining. The Wagyu melted in my mouth. A truly unforgettable
+            evening."</p>
+          <p class="testimonial-author">- Eleanor Vance</p>
+        </div>
+        <div class="testimonial-slide">
+          <p class="testimonial-text">"From the elegant decor to the exquisite desserts, everything screams perfection.
+            5 stars."</p>
+          <p class="testimonial-author">- Michael Chang</p>
+        </div>
+      </div>
+
+      <div class="testimonial-controls">
+        <span class="dot active" onclick="currentSlide(0)"></span>
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h4>AURA</h4>
+          <p>Experience the epitome of luxury dining. Unforgettable tastes, mesmerizing atmosphere.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="menu.html">Our Menu</a></li>
+            <li><a href="order.html">Order Online</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Reservations</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><i class="fas fa-map-marker-alt" style="color:var(--secondary-color); margin-right: 10px;"></i> 123
+              Luxury Avenue, NY 10001</li>
+            <li><i class="fas fa-phone" style="color:var(--secondary-color); margin-right: 10px;"></i> +1 (555) 123-4567
+            </li>
+            <li><i class="fas fa-envelope" style="color:var(--secondary-color); margin-right: 10px;"></i>
+              reservations@auradining.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Aura Luxury Dining. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top -->
+  <div class="scroll-top">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Testimonial Slider Logic
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.dot');
+    let timer;
+
+    function showSlides(n) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+
+      slideIndex = n;
+      if (slideIndex >= slides.length) slideIndex = 0;
+      if (slideIndex < 0) slideIndex = slides.length - 1;
+
+      slides[slideIndex].classList.add('active');
+      dots[slideIndex].classList.add('active');
+    }
+
+    function currentSlide(n) {
+      showSlides(n);
+      resetTimer();
+    }
+
+    function autoPlay() {
+      slideIndex++;
+      showSlides(slideIndex);
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(autoPlay, 5000);
+    }
+
+    // Initialize slider
+    timer = setInterval(autoPlay, 5000);
+  </script>
+</body>
+
+</html>

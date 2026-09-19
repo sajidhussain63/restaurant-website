@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Aura Luxury Dining</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-family='serif' font-size='80' fill='%23FFC300'>A</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-header {
+      padding: 150px 0 80px;
+      text-align: center;
+      background: linear-gradient(to bottom, var(--bg-dark), var(--bg-darker));
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    /* Story Section */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+      .story-img-container {
+        order: -1;
+      }
+    }
+
+    .story-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .story-text p {
+      margin-bottom: 25px;
+    }
+
+    .story-img-container {
+      position: relative;
+    }
+
+    .story-img {
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    }
+
+    .img-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 150px;
+      height: 150px;
+      border: 2px solid var(--secondary-color);
+      z-index: -1;
+      border-radius: 20px;
+    }
+
+    /* Chef Section */
+    .chef-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .chef-card {
+      text-align: center;
+      padding: 30px;
+      transition: transform var(--transition-slow);
+    }
+
+    .chef-card:hover {
+      transform: translateY(-15px);
+    }
+
+    .chef-img-wrapper {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--glass-border);
+      position: relative;
+    }
+
+    .chef-img-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      border-radius: 50%;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .chef-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .chef-card:hover .chef-img {
+      transform: scale(1.1);
+    }
+
+    .chef-name {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .chef-role {
+      color: var(--secondary-color);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      background: url('assets/images/hero_bg.png') center/cover fixed;
+      position: relative;
+      padding: 100px 0;
+    }
+
+    .stats-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(10,10,10,0.9);
+    }
+
+    .stats-container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--font-heading);
+      font-size: 4rem;
+      color: var(--secondary-color);
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-container">
+      <div class="logo">AURA</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="order.html">Order</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-header reveal">
+    <div class="container">
+      <h4 class="section-subtitle">Our Heritage</h4>
+      <h1 class="section-title">The Aura Story</h1>
+    </div>
+  </div>
+
+  <!-- Story Section -->
+  <section class="section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-text reveal fade-right">
+          <h2 style="font-family: var(--font-heading); font-size: 2.5rem; color: #fff; margin-bottom: 20px;">Redefining Fine Dining Since 2010</h2>
+          <p>
+            Aura was born out of a passion for perfection. We started as an intimate gathering place for food connoisseurs and quickly evolved into a destination for those seeking an unparalleled culinary journey.
+          </p>
+          <p>
+            Every element of our restaurant—from the dimly lit, elegant ambiance to the meticulous plating of our dishes—is designed to evoke emotion and create lasting memories. We believe that a meal is more than sustenance; it is art.
+          </p>
+          <div style="margin-top: 30px;">
+            <p style="font-family: var(--font-heading); font-size: 1.2rem; color: var(--secondary-color); font-style: italic;">
+              "Cooking is not just about technique; it's about pouring your soul into every plate."
+            </p>
+          </div>
+        </div>
+        <div class="story-img-container reveal fade-left">
+          <img src="assets/images/hero_bg.png" alt="Restaurant Interior" class="story-img">
+          <div class="img-accent"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stats-overlay"></div>
+    <div class="container stats-container reveal">
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Michelin Stars</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">40+</div>
+        <div class="stat-label">Signature Dishes</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="section section-bg-dark">
+    <div class="container">
+      <div class="text-center reveal">
+        <h4 class="section-subtitle">The Masters</h4>
+        <h2 class="section-title">Meet Our Chefs</h2>
+      </div>
+
+      <div class="chef-grid">
+        <!-- Chef 1 -->
+        <div class="chef-card glass-panel reveal fade-up">
+          <div class="chef-img-wrapper">
+            <img src="assets/images/chef.png" alt="Executive Chef" class="chef-img">
+          </div>
+          <h3 class="chef-name">Alexander Vane</h3>
+          <p class="chef-role">Executive Chef</p>
+          <p style="font-size: 0.9rem;">With over 20 years in Paris and Tokyo, Alexander brings a fusion of classic French technique and Asian precision to Aura.</p>
+        </div>
+
+        <!-- Chef 2 -->
+        <div class="chef-card glass-panel reveal fade-up" style="transition-delay: 0.2s;">
+          <div class="chef-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Head Pastry Chef" class="chef-img">
+          </div>
+          <h3 class="chef-name">Elena Rossi</h3>
+          <p class="chef-role">Head Pastry Chef</p>
+          <p style="font-size: 0.9rem;">Elena's creations are a symphony of sugar, chocolate, and art. Her desserts are visual masterpieces that taste divine.</p>
+        </div>
+
+        <!-- Chef 3 -->
+        <div class="chef-card glass-panel reveal fade-up" style="transition-delay: 0.4s;">
+          <div class="chef-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Sous Chef" class="chef-img">
+          </div>
+          <h3 class="chef-name">Marcus Chen</h3>
+          <p class="chef-role">Sous Chef</p>
+          <p style="font-size: 0.9rem;">The backbone of our kitchen, Marcus ensures that every dish leaving the pass meets our rigorous standards of perfection.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h4>AURA</h4>
+          <p>Experience the epitome of luxury dining. Unforgettable tastes, mesmerizing atmosphere.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>reservations@auradining.com<br>+1 (555) 123-4567</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Aura Luxury Dining. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-top">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

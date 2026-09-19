@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu | Aura Luxury Dining</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-family='serif' font-size='80' fill='%23FFC300'>A</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-header {
+      padding: 150px 0 80px;
+      text-align: center;
+      background: linear-gradient(to bottom, var(--bg-dark), var(--bg-darker));
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 50px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 10px 25px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 500;
+      transition: all var(--transition-fast);
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--primary-color);
+      color: #fff;
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      margin-bottom: 80px;
+    }
+
+    .menu-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.4s ease;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .menu-item.hide {
+      display: none;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    }
+
+    .menu-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .menu-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .menu-item:hover .menu-img {
+      transform: scale(1.1);
+    }
+
+    .menu-content {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .menu-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: #fff;
+      margin: 0;
+    }
+
+    .menu-price {
+      color: var(--secondary-color);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .menu-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .add-to-cart {
+      background: transparent;
+      color: var(--secondary-color);
+      border: 1px solid var(--secondary-color);
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      transition: all var(--transition-fast);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .add-to-cart:hover {
+      background: var(--secondary-color);
+      color: var(--bg-dark);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    /* Cart Icon Badge */
+    .cart-icon-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.65rem;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-container">
+      <div class="logo">AURA</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html" class="active">Menu</a></li>
+          <li><a href="order.html">Order</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li class="cart-icon-container">
+            <a href="order.html"><i class="fas fa-shopping-bag"></i></a>
+            <span class="cart-badge cart-count">0</span>
+          </li>
+        </ul>
+      </nav>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-header reveal">
+    <div class="container">
+      <h4 class="section-subtitle">Discover</h4>
+      <h1 class="section-title">Our Exquisite Menu</h1>
+      <p style="max-width: 600px; margin: 0 auto;">A carefully curated selection of the finest ingredients, transformed into culinary masterpieces.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      
+      <!-- Filters -->
+      <div class="filter-container reveal fade-up">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="main">Main Dishes</button>
+        <button class="filter-btn" data-filter="bbq">BBQ Items</button>
+        <button class="filter-btn" data-filter="rice">Rice Dishes</button>
+        <button class="filter-btn" data-filter="bread">Bread</button>
+        <button class="filter-btn" data-filter="drinks">Drinks & Desserts</button>
+      </div>
+
+      <!-- Menu Grid -->
+      <div class="menu-grid reveal fade-up" id="menu-grid">
+        <!-- JS will populate this -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h4>AURA</h4>
+          <p>Experience the epitome of luxury dining. Unforgettable tastes, mesmerizing atmosphere.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>reservations@auradining.com<br>+1 (555) 123-4567</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Aura Luxury Dining. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-top">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    const menuData = [
+      { id: 1, category: 'main', name: 'A5 Wagyu Ribeye', price: 185, desc: 'Truffle mash, gold leaf, red wine jus', img: 'assets/images/steak_dish.png' },
+      { id: 2, category: 'main', name: 'Pan-Seared Scallops', price: 85, desc: 'Cauliflower purée, caviar, herb oil', img: 'assets/images/steak_dish.png' },
+      { id: 3, category: 'main', name: 'Lobster Thermidor', price: 120, desc: 'Cognac cream, gruyere, wild mushrooms', img: 'assets/images/hero_bg.png' },
+      { id: 4, category: 'bbq', name: 'Smoked Brisket', price: 65, desc: 'Hickory smoked for 16 hours, house BBQ', img: 'assets/images/steak_dish.png' },
+      { id: 5, category: 'bbq', name: 'Lamb Chops', price: 75, desc: 'Rosemary infused, flame-grilled to perfection', img: 'assets/images/steak_dish.png' },
+      { id: 6, category: 'rice', name: 'Saffron Risotto', price: 45, desc: 'Arborio rice, parmesan crisp, white truffle', img: 'assets/images/hero_bg.png' },
+      { id: 7, category: 'rice', name: 'Wild Mushroom Paella', price: 55, desc: 'Bomba rice, assorted wild mushrooms, herbs', img: 'assets/images/hero_bg.png' },
+      { id: 8, category: 'bread', name: 'Artisan Sourdough', price: 15, desc: 'Cultured butter, sea salt flakes', img: 'assets/images/hero_bg.png' },
+      { id: 9, category: 'bread', name: 'Truffle Garlic Bread', price: 18, desc: 'Roasted garlic, black truffle shavings', img: 'assets/images/hero_bg.png' },
+      { id: 10, category: 'drinks', name: 'Dark Chocolate Dome', price: 45, desc: 'Raspberry coulis, hazelnut crunch', img: 'assets/images/steak_dish.png' },
+      { id: 11, category: 'drinks', name: 'Aura Signature Cocktail', price: 25, desc: 'Gin, elderflower, blackberry smoke', img: 'assets/images/hero_bg.png' }
+    ];
+
+    const menuGrid = document.getElementById('menu-grid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    // Render Items
+    function renderMenu(items) {
+      menuGrid.innerHTML = '';
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'menu-item glass-panel';
+        div.innerHTML = `
+          <div class="menu-img-wrapper">
+            <img src="${item.img}" alt="${item.name}" class="menu-img">
+          </div>
+          <div class="menu-content">
+            <div class="menu-header">
+              <h3 class="menu-title">${item.name}</h3>
+              <span class="menu-price">$${item.price}</span>
+            </div>
+            <p class="menu-desc">${item.desc}</p>
+            <button class="add-to-cart" onclick="addToCart(${item.id}, '${item.name}', ${item.price}, '${item.img}')">
+              <i class="fas fa-plus"></i> Add to Order
+            </button>
+          </div>
+        `;
+        menuGrid.appendChild(div);
+      });
+    }
+
+    // Initial render
+    renderMenu(menuData);
+    if(typeof window.initTiltEffect === 'function') {
+      setTimeout(window.initTiltEffect, 100);
+    }
+
+    // Filter Logic
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filterValue = btn.getAttribute('data-filter');
+        
+        // Add fade out effect
+        menuGrid.style.opacity = '0';
+        
+        setTimeout(() => {
+          let filteredData = menuData;
+          if (filterValue !== 'all') {
+            filteredData = menuData.filter(item => item.category === filterValue);
+          }
+          renderMenu(filteredData);
+          menuGrid.style.opacity = '1';
+          if(typeof window.initTiltEffect === 'function') {
+            window.initTiltEffect();
+          }
+        }, 300); // Wait for fade out
+      });
+    });
+
+  </script>
+</body>
+</html>

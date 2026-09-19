@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Order | Aura Luxury Dining</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-family='serif' font-size='80' fill='%23FFC300'>A</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .page-header {
+      padding: 150px 0 80px;
+      text-align: center;
+      background: linear-gradient(to bottom, var(--bg-dark), var(--bg-darker));
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .order-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 992px) {
+      .order-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cart-items {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .cart-item-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
+    }
+
+    .cart-item-title {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 5px;
+      font-family: var(--font-heading);
+    }
+
+    .cart-item-price {
+      color: var(--secondary-color);
+      font-weight: 600;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      color: var(--text-light);
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all var(--transition-fast);
+    }
+
+    .qty-btn:hover {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .remove-btn {
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: color var(--transition-fast);
+    }
+
+    .remove-btn:hover {
+      color: var(--primary-color);
+    }
+
+    .order-summary {
+      padding: 30px;
+      border-radius: 16px;
+      height: fit-content;
+      position: sticky;
+      top: 120px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      color: var(--text-muted);
+    }
+
+    .summary-row.total {
+      border-top: 1px solid var(--glass-border);
+      padding-top: 15px;
+      margin-top: 15px;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .empty-cart-msg {
+      text-align: center;
+      padding: 50px;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+
+    /* Cart Icon Badge */
+    .cart-icon-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 0.65rem;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-container">
+      <div class="logo">AURA</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="order.html" class="active">Order</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li class="cart-icon-container">
+            <a href="order.html" class="active"><i class="fas fa-shopping-bag"></i></a>
+            <span class="cart-badge cart-count">0</span>
+          </li>
+        </ul>
+      </nav>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-header reveal">
+    <div class="container">
+      <h4 class="section-subtitle">Your Selection</h4>
+      <h1 class="section-title">Review Order</h1>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container reveal fade-up">
+      <div class="order-container">
+        
+        <!-- Cart Items List -->
+        <div class="cart-items" id="cart-items-container">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary glass-panel">
+          <h3 style="margin-bottom: 20px; font-family: var(--font-heading);">Order Summary</h3>
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="summary-subtotal">$0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Tax (8.5%)</span>
+            <span id="summary-tax">$0.00</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="summary-total" style="color: var(--secondary-color);">$0.00</span>
+          </div>
+          <button class="btn btn-primary checkout-btn" onclick="processCheckout()">Proceed to Checkout</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <h4>AURA</h4>
+          <p>Experience the epitome of luxury dining. Unforgettable tastes, mesmerizing atmosphere.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <p>reservations@auradining.com<br>+1 (555) 123-4567</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Aura Luxury Dining. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <div class="scroll-top">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    const cartContainer = document.getElementById('cart-items-container');
+    const subtotalEl = document.getElementById('summary-subtotal');
+    const taxEl = document.getElementById('summary-tax');
+    const totalEl = document.getElementById('summary-total');
+
+    function renderCartPage() {
+      cartContainer.innerHTML = '';
+      
+      if (cart.length === 0) {
+        cartContainer.innerHTML = `
+          <div class="empty-cart-msg glass-panel">
+            <i class="fas fa-shopping-basket" style="font-size: 3rem; margin-bottom: 20px; color: var(--glass-border);"></i>
+            <p>Your culinary journey awaits.</p>
+            <a href="menu.html" class="btn btn-secondary" style="margin-top: 15px;">Explore Menu</a>
+          </div>
+        `;
+        updateSummary();
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'cart-item glass-panel';
+        itemEl.style.animation = `fadeUp 0.5s ease forwards ${index * 0.1}s`;
+        itemEl.style.opacity = '0';
+        
+        itemEl.innerHTML = `
+          <img src="${item.img || item.image}" alt="${item.name}" class="cart-item-img">
+          <div class="cart-item-details">
+            <h3 class="cart-item-title">${item.name}</h3>
+            <div class="cart-item-price">$${item.price}</div>
+            <div class="quantity-controls">
+              <button class="qty-btn" onclick="updateQty(${item.id}, -1)"><i class="fas fa-minus" style="font-size: 0.7rem;"></i></button>
+              <span style="width: 20px; text-align: center;">${item.quantity}</span>
+              <button class="qty-btn" onclick="updateQty(${item.id}, 1)"><i class="fas fa-plus" style="font-size: 0.7rem;"></i></button>
+            </div>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${item.id})"><i class="fas fa-trash-alt"></i></button>
+        `;
+        cartContainer.appendChild(itemEl);
+      });
+
+      updateSummary();
+    }
+
+    function updateQty(id, change) {
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.quantity += change;
+        if (item.quantity <= 0) {
+          cart = cart.filter(i => i.id !== id);
+        }
+        saveCart();
+        renderCartPage();
+      }
+    }
+
+    function removeItem(id) {
+      cart = cart.filter(i => i.id !== id);
+      saveCart();
+      renderCartPage();
+    }
+
+    function updateSummary() {
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const tax = subtotal * 0.085; // 8.5% tax
+      const total = subtotal + tax;
+
+      subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+      taxEl.textContent = `$${tax.toFixed(2)}`;
+      totalEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+    function processCheckout() {
+      if (cart.length === 0) {
+        showToast("Your cart is empty.");
+        return;
+      }
+      
+      showToast("Processing your luxurious order...");
+      
+      // Simulate checkout
+      setTimeout(() => {
+        cart = [];
+        saveCart();
+        renderCartPage();
+        cartContainer.innerHTML = `
+          <div class="empty-cart-msg glass-panel">
+            <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 20px; color: var(--secondary-color);"></i>
+            <h3 style="color: #fff; margin-bottom: 10px;">Order Confirmed</h3>
+            <p>Your exquisite meal is being prepared. Thank you for dining with Aura.</p>
+          </div>
+        `;
+      }, 2000);
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Small delay to ensure global cart is loaded
+      setTimeout(renderCartPage, 100);
+    });
+  </script>
+</body>
+</html>
